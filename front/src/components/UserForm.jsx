@@ -11,11 +11,10 @@ const UserForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // console.log("Dados a serem enviados:", user);
+      // console.log("Dados a serem enviados:", user);cha
       await api.post("users", user);
       alert("Usuário criado com sucesso!");
       setUser({ name: "", email: "", password: "" });
-
     } catch (error) {
       // console.error(
       //   "Erro ao criar usuário",
