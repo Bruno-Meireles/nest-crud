@@ -35,4 +35,13 @@ export class ProductService {
       where: { id },
     });
   }
+  async uploadFile(file: Express.Multer.File) {
+    const newFile = await this.prisma.upload.create({
+      data: {
+        fileName: file.originalname,
+        filePath: file.path, 
+      },
+    });
+    return newFile;
+  }
 }
