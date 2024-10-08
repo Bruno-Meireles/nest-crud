@@ -5,11 +5,17 @@ const ProductForm = () => {
   const [product, setProduct] = useState({
     name: "",
     description: "",
-    price: 0,
+    price: 0, 
   });
 
   const handleChange = (e) => {
-    setProduct({ ...product, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+
+    setProduct({
+      ...product,
+      [name]: name === "price" ? (value ? parseFloat(value) : 0) : value,
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -17,7 +23,7 @@ const ProductForm = () => {
     try {
       await api.post("products", product);
       alert("Produto criado com sucesso!");
-      setProduct({ name: "", description: "", price: "" });
+      setProduct({ name: "", description: "", price: 0 }); 
     } catch (error) {
       alert(
         "Erro ao criar produto: " +
