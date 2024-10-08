@@ -1,8 +1,14 @@
 import { useState } from "react";
-import api from "../services/api";
+import api from "../../services/api";
+import Input from "../ui/Input/Input";
+import Button from "../ui/Button/Button";
 
 const UserForm = () => {
-  const [user, setUser] = useState({ name: "", email: "", password: "" });
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -11,15 +17,10 @@ const UserForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // console.log("Dados a serem enviados:", user);cha
       await api.post("users", user);
       alert("Usuário criado com sucesso!");
       setUser({ name: "", email: "", password: "" });
     } catch (error) {
-      // console.error(
-      //   "Erro ao criar usuário",
-      //   error.response?.data || error.message
-      // );
       alert(
         "Erro ao criar usuário: " +
           (error.response?.data.message || error.message)
@@ -29,7 +30,7 @@ const UserForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
+      <Input
         type="text"
         name="name"
         value={user.name}
@@ -37,7 +38,7 @@ const UserForm = () => {
         placeholder="Nome"
         required
       />
-      <input
+      <Input
         type="email"
         name="email"
         value={user.email}
@@ -45,7 +46,7 @@ const UserForm = () => {
         placeholder="Email"
         required
       />
-      <input
+      <Input
         type="password"
         name="password"
         value={user.password}
@@ -53,7 +54,7 @@ const UserForm = () => {
         placeholder="Senha"
         required
       />
-      <button type="submit">Criar Usuário</button>
+      <Button text="Criar Usuário" />
     </form>
   );
 };

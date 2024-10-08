@@ -1,29 +1,35 @@
 import { useState } from "react";
-import api from "../services/api";
+import PropTypes from "prop-types";
+import api from "../../services/api";
+import "./ProductForm.css";
+import Button from "../ui/Button/Button";
+import Input from "../ui/Input/Input";
 
-const ProductForm = () => {
+const ProductForm = ({ onAddProduct }) => {
   const [product, setProduct] = useState({
     name: "",
     description: "",
-    price: 0, 
+    price: 0,
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+    const newValue = name === "price" ? parseFloat(value) || 0 : value;
 
-    setProduct({
-      ...product,
-      [name]: name === "price" ? (value ? parseFloat(value) : 0) : value,
-    });
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      [name]: newValue,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post("products", product);
+      const response = await api.post("products", product);
       alert("Produto criado com sucesso!");
-      setProduct({ name: "", description: "", price: 0 }); 
+      onAddProduct(response.data);
+      setProduct({ name: "", description: "", price: 0 });
     } catch (error) {
       alert(
         "Erro ao criar produto: " +
@@ -34,7 +40,7 @@ const ProductForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
+      <Input
         type="text"
         name="name"
         value={product.name}
@@ -42,7 +48,7 @@ const ProductForm = () => {
         placeholder="Nome"
         required
       />
-      <input
+      <Input
         type="text"
         name="description"
         value={product.description}
@@ -50,7 +56,7 @@ const ProductForm = () => {
         placeholder="Descrição"
         required
       />
-      <input
+      <Input
         type="number"
         name="price"
         value={product.price}
@@ -58,9 +64,13 @@ const ProductForm = () => {
         placeholder="Preço"
         required
       />
-      <button type="submit">Criar Produto</button>
+      <Button text="Criar Produto" />
     </form>
   );
+};
+
+ProductForm.propTypes = {
+  onAddProduct: PropTypes.func.isRequired,
 };
 
 export default ProductForm;

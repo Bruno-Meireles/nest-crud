@@ -1,0 +1,38 @@
+.product-catalog {
+    padding: 20px;
+}
+
+.product-list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    flex: 1 1 200px;
+    max-width: 250px;
+}
+
+.card-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.card-title {
+    font-size: 1.2em;
+}
+
+.card-description {
+    font-size: 0.9em;
+}
+
+.card-price {
+    font-weight: bold;
+}
