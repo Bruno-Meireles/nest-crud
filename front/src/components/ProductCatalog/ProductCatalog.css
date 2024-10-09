@@ -1,9 +1,11 @@
 .product-list {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .product-card {
     max-width: 300px;
+    min-width: 300px;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 16px;

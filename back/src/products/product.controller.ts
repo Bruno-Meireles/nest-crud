@@ -20,29 +20,16 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class ProductsController {
   constructor(private readonly productsService: ProductService) {}
 
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return {
-      message: 'Upload realizado com sucesso!',
-      file: file.filename,
-    };
-  }
-
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('file')) // Intercepta o arquivo
   async create(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
     const createProductDto = new CreateProductDto();
     createProductDto.name = body.name;
     createProductDto.description = body.description;
     createProductDto.price = parseFloat(body.price);
 
-   
-    if (file) {
-      createProductDto.imageUrl = `uploads/${file.filename}`; 
-    } else {
-      createProductDto.imageUrl = null; 
-    }
+    // Verifica se o arquivo foi enviado e ajusta a URL da imagem
+    createProductDto.imageUrl = file ? `uploads/${file.filename}` : null;
 
     return this.productsService.create(createProductDto);
   }

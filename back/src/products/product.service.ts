@@ -1,16 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateProductDto } from './dto/create-product.dto';
 
 @Injectable()
 export class ProductService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(createProductDto: CreateProductDto) {
-    return this.prisma.product.create({
-      data: createProductDto,
-    });
+    return this.prisma.product.create({ data: createProductDto });
   }
 
   async findAll() {
@@ -18,12 +15,10 @@ export class ProductService {
   }
 
   async findOne(id: number) {
-    return this.prisma.product.findUnique({
-      where: { id },
-    });
+    return this.prisma.product.findUnique({ where: { id } });
   }
 
-  async update(id: number, updateProductDto: UpdateProductDto) {
+  async update(id: number, updateProductDto: any) {
     return this.prisma.product.update({
       where: { id },
       data: updateProductDto,
@@ -31,17 +26,6 @@ export class ProductService {
   }
 
   async remove(id: number) {
-    return this.prisma.product.delete({
-      where: { id },
-    });
-  }
-  async uploadFile(file: Express.Multer.File) {
-    const newFile = await this.prisma.upload.create({
-      data: {
-        fileName: file.originalname,
-        filePath: file.path, 
-      },
-    });
-    return newFile;
+    return this.prisma.product.delete({ where: { id } });
   }
 }

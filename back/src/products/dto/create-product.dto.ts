@@ -1,19 +1,16 @@
-import { IsNotEmpty, IsString, IsNumber, IsOptional } from 'class-validator';
+import { IsNumber, IsString, IsOptional } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
-  @IsNotEmpty()
   name: string;
 
   @IsString()
-  @IsNotEmpty()
   description: string;
 
   @IsNumber()
-  @IsNotEmpty()
   price: number;
 
-  @IsString()
-  @IsOptional()
-  imageUrl: string | null;
+  @IsOptional() // Torna a propriedade opcional
+  @IsString() // Define que será uma string
+  imageUrl?: string; // Propriedade imageUrl adicionada
 }
