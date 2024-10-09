@@ -20,14 +20,14 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class ProductsController {
   constructor(private readonly productsService: ProductService) {}
 
-  // @Post('upload')
-  // @UseInterceptors(FileInterceptor('file'))
-  // uploadFile(@UploadedFile() file: Express.Multer.File) {
-  //   return {
-  //     message: 'Upload realizado com sucesso!',
-  //     file: file.filename,
-  //   };
-  // }
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    return {
+      message: 'Upload realizado com sucesso!',
+      file: file.filename,
+    };
+  }
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
