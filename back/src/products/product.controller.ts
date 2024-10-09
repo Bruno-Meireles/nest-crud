@@ -31,23 +31,22 @@ export class ProductsController {
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
-  create(
-    @UploadedFile() file: Express.Multer.File,
-    @Body() body: any, // Usa `any` para capturar o FormData
-  ) {
+  async create(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
     const createProductDto = new CreateProductDto();
-
-    // Converte os campos corretamente
     createProductDto.name = body.name;
     createProductDto.description = body.description;
-    createProductDto.price = parseFloat(body.price); // Converte o preço para número
+    createProductDto.price = parseFloat(body.price);
 
+   
     if (file) {
-      createProductDto.imageUrl = file.filename; // Salva o nome da imagem
+      createProductDto.imageUrl = `uploads/${file.filename}`; 
+    } else {
+      createProductDto.imageUrl = null; 
     }
 
     return this.productsService.create(createProductDto);
   }
+
   @Get()
   findAll() {
     return this.productsService.findAll();

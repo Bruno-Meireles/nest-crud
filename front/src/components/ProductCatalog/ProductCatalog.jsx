@@ -11,6 +11,7 @@ const ProductCatalog = () => {
     const fetchProducts = async () => {
       try {
         const response = await api.get("products");
+        console.log(response.data);
         setProducts(response.data);
       } catch (error) {
         console.error("Erro ao buscar produtos:", error);
@@ -32,7 +33,11 @@ const ProductCatalog = () => {
         {products.map((product) => (
           <div key={product.id} className="product-card">
             <img
-              src={product.imageUrl}
+              src={
+                product.imageUrl
+                  ? `http://localhost:3000/${product.imageUrl}`
+                  : "caminho/default.jpg"
+              }
               alt={product.name}
               className="card-image"
             />
