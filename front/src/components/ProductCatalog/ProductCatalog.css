@@ -1,3 +1,7 @@
+.product-list {
+    display: flex;
+}
+
 .product-card {
     max-width: 300px;
     border: 1px solid #ccc;
@@ -14,8 +18,9 @@
 
 .card-image {
     width: 100%;
-    height: auto;
+    height: 200px;
     border-radius: 8px;
+    object-fit: cover;
 }
 
 .card-title {
