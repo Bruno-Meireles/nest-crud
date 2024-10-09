@@ -10,26 +10,45 @@ const ProductForm = ({ onAddProduct }) => {
     name: "",
     description: "",
     price: 0,
+    image: null, // Novo campo para o arquivo de imagem
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    const newValue = name === "price" ? parseFloat(value) || 0 : value;
-
-    setProduct((prevProduct) => ({
-      ...prevProduct,
-      [name]: newValue,
-    }));
+    const { name, value, files } = e.target;
+    if (name === "image") {
+      setProduct((prevProduct) => ({
+        ...prevProduct,
+        image: files[0], // Armazena o arquivo no estado
+      }));
+    } else {
+      const newValue = name === "price" ? parseFloat(value) || 0 : value;
+      setProduct((prevProduct) => ({
+        ...prevProduct,
+        [name]: newValue,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post("products", product);
+      const formData = new FormData();
+      formData.append("name", product.name);
+      formData.append("description", product.description);
+      formData.append("price", product.price);
+      if (product.image) {
+        formData.append("file", product.image); // Anexa a imagem ao FormData
+      }
+
+      const response = await api.post("products", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       alert("Produto criado com sucesso!");
       onAddProduct(response.data);
-      setProduct({ name: "", description: "", price: 0 });
+      setProduct({ name: "", description: "", price: 0, image: null });
     } catch (error) {
       alert(
         "Erro ao criar produto: " +
@@ -63,6 +82,12 @@ const ProductForm = ({ onAddProduct }) => {
         onChange={handleChange}
         placeholder="Preço"
         required
+      />
+      <Input
+        type="file"
+        name="image"
+        onChange={handleChange} // Manipula o arquivo de imagem
+        placeholder="Imagem"
       />
       <Button text="Criar Produto" />
     </form>

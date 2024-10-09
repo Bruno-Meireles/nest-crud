@@ -20,23 +20,33 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class ProductsController {
   constructor(private readonly productsService: ProductService) {}
 
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return {
-      message: 'Upload realizado com sucesso!',
-      file: file.filename,
-    };
-  }
+  // @Post('upload')
+  // @UseInterceptors(FileInterceptor('file'))
+  // uploadFile(@UploadedFile() file: Express.Multer.File) {
+  //   return {
+  //     message: 'Upload realizado com sucesso!',
+  //     file: file.filename,
+  //   };
+  // }
 
   @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productsService.create(createProductDto);
-  }
+  @UseInterceptors(FileInterceptor('file'))
+  create(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() body: any, // Usa `any` para capturar o FormData
+  ) {
+    const createProductDto = new CreateProductDto();
 
-  @Get()
-  findAll() {
-    return this.productsService.findAll();
+    // Converte os campos corretamente
+    createProductDto.name = body.name;
+    createProductDto.description = body.description;
+    createProductDto.price = parseFloat(body.price); // Converte o preço para número
+
+    if (file) {
+      createProductDto.imageUrl = file.filename; // Salva o nome da imagem
+    }
+
+    return this.productsService.create(createProductDto);
   }
 
   @Get(':id')
