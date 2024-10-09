@@ -9,8 +9,8 @@ const ProductForm = ({ onAddProduct }) => {
   const [product, setProduct] = useState({
     name: "",
     description: "",
-    price: 0,
-    image: null, // Novo campo para o arquivo de imagem
+    price: "", // Mantenha como string para o input
+    image: null,
   });
 
   const handleChange = (e) => {
@@ -21,7 +21,7 @@ const ProductForm = ({ onAddProduct }) => {
         image: files[0], // Armazena o arquivo no estado
       }));
     } else {
-      const newValue = name === "price" ? parseFloat(value) || 0 : value;
+      const newValue = name === "price" ? value : value; // Não precisa de parseFloat aqui, pois price será string
       setProduct((prevProduct) => ({
         ...prevProduct,
         [name]: newValue,
@@ -37,7 +37,7 @@ const ProductForm = ({ onAddProduct }) => {
       formData.append("description", product.description);
       formData.append("price", product.price);
       if (product.image) {
-        formData.append("file", product.image); // Anexa a imagem ao FormData
+        formData.append("file", product.image);
       }
 
       const response = await api.post("products", formData, {
@@ -48,7 +48,7 @@ const ProductForm = ({ onAddProduct }) => {
 
       alert("Produto criado com sucesso!");
       onAddProduct(response.data);
-      setProduct({ name: "", description: "", price: 0, image: null });
+      setProduct({ name: "", description: "", price: "", image: null }); // Reseta o estado
     } catch (error) {
       alert(
         "Erro ao criar produto: " +
@@ -76,7 +76,7 @@ const ProductForm = ({ onAddProduct }) => {
         required
       />
       <Input
-        type="number"
+        type="text" // Alterado para "text" para permitir string
         name="price"
         value={product.price}
         onChange={handleChange}
@@ -86,7 +86,7 @@ const ProductForm = ({ onAddProduct }) => {
       <Input
         type="file"
         name="image"
-        onChange={handleChange} // Manipula o arquivo de imagem
+        onChange={handleChange}
         placeholder="Imagem"
       />
       <Button text="Criar Produto" />
