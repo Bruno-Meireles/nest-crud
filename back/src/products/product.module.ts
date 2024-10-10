@@ -5,6 +5,8 @@ import { ProductsController } from './product.controller';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { PrismaModule } from 'src/prisma/prisma.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+
 
 @Module({
   imports: [
@@ -20,6 +22,7 @@ import { PrismaModule } from 'src/prisma/prisma.module';
       }),
     }),
     PrismaModule, 
+    EventEmitterModule.forRoot()
   ],
   controllers: [ProductsController],
   providers: [ProductService],

@@ -10,7 +10,7 @@ export class CreateProductDto {
   @IsNumber()
   price: number;
 
-  @IsOptional() // Torna a propriedade opcional
-  @IsString() // Define que será uma string
-  imageUrl?: string; // Propriedade imageUrl adicionada
+  @IsOptional() 
+  @IsString() 
+  imageUrl?: string;
 }

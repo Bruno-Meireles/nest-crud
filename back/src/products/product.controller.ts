@@ -15,20 +15,23 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductService } from './product.service';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductService) {}
+  constructor(
+    private readonly productsService: ProductService,
+    private eventEmitter: EventEmitter2,
+  ) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('file')) // Intercepta o arquivo
+  @UseInterceptors(FileInterceptor('file'))
   async create(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
     const createProductDto = new CreateProductDto();
     createProductDto.name = body.name;
     createProductDto.description = body.description;
     createProductDto.price = parseFloat(body.price);
 
-    // Verifica se o arquivo foi enviado e ajusta a URL da imagem
     createProductDto.imageUrl = file ? `uploads/${file.filename}` : null;
 
     return this.productsService.create(createProductDto);
@@ -53,7 +56,11 @@ export class ProductsController {
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.productsService.remove(id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    const deletedProduct = await this.productsService.remove(id);
+
+    this.eventEmitter.emit('product.deleted', deletedProduct);
+
+    return deletedProduct;
   }
 }
