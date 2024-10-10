@@ -23,15 +23,9 @@ model Product {
   name        String   @db.VarChar(127)
   description String   @db.Text
   price       Float
+  imageUrl    String?  
   createdAt   DateTime @default(now()) @db.Timestamp(0)
   updatedAt   DateTime @default(now()) @db.Timestamp(0)
 
   @@map("products")
-
-  
-}
-model Upload {
-  id        Int    @id @default(autoincrement())
-  fileName  String
-  filePath  String
 }

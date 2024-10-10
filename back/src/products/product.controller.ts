@@ -31,10 +31,9 @@ export class ProductsController {
     createProductDto.name = body.name;
     createProductDto.description = body.description;
     createProductDto.price = parseFloat(body.price);
-
     createProductDto.imageUrl = file ? `uploads/${file.filename}` : null;
 
-    return this.productsService.create(createProductDto);
+    return this.productsService.create(createProductDto, file); // Passando o arquivo também
   }
 
   @Get()

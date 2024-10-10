@@ -1,13 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto'; // Importando o DTO de atualização
 
 @Injectable()
 export class ProductService {
   constructor(private readonly prisma: PrismaService) {}
+  async create(createProductDto: CreateProductDto, file: Express.Multer.File) {
+    const imageUrl = file ? `uploads/${file.filename}` : null;
 
-  async create(createProductDto: CreateProductDto) {
-    return this.prisma.product.create({ data: createProductDto });
+    return this.prisma.product.create({
+      data: {
+        ...createProductDto,
+        imageUrl, // Incluindo a URL da imagem
+      },
+    });
   }
 
   async findAll() {
@@ -18,7 +25,8 @@ export class ProductService {
     return this.prisma.product.findUnique({ where: { id } });
   }
 
-  async update(id: number, updateProductDto: any) {
+  async update(id: number, updateProductDto: UpdateProductDto) {
+    // Utilizando UpdateProductDto para atualizar os dados do produto
     return this.prisma.product.update({
       where: { id },
       data: updateProductDto,
