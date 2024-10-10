@@ -1,7 +1,7 @@
 import { useState } from "react";
-import api from "../../services/api";
-import Input from "../ui/Input/Input";
-import Button from "../ui/Button/Button";
+import api from "../../../services/api";
+import Input from "../../ui/Input/Input";
+import Button from "../../ui/Button/Button";
 
 const UserForm = () => {
   const [user, setUser] = useState({

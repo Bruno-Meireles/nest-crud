@@ -1,13 +1,17 @@
-import ProductCatalog from "./components/ProductCatalog/ProductCatalog";
-// import UserForm from "./components/UserForm/UserForm";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import CreateProduct from "./components/pages/CreateProduct/CreateProduct";
+import ProductCatalog from "./components/pages/ProductCatalog/ProductCatalog";
+import EditProduct from "./components/pages/EditProduct/EditProduct";
 
 const App = () => {
   return (
-    <div>
-      <h1>Cadastro de Usuários</h1>
-      {/* <UserForm /> */}
-      <ProductCatalog />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<ProductCatalog />} />
+        <Route path="/create" element={<CreateProduct />} />
+        <Route path="/edit/:id" element={<EditProduct />} />
+      </Routes>
+    </Router>
   );
 };
 

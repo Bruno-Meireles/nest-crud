@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import "./Button.css";
 
-const Button = ({ text }) => {
+const Button = ({ text, onClick, type = "button" }) => {
   return (
-    <button type="submit" className="custom-button">
+    <button type={type} className="custom-button" onClick={onClick}>
       {text}
     </button>
   );
@@ -11,6 +11,8 @@ const Button = ({ text }) => {
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,
+  onClick: PropTypes.func, // Adiciona onClick como prop opcional
+  type: PropTypes.string, // Adiciona type como prop opcional (default: 'button')
 };
 
 export default Button;

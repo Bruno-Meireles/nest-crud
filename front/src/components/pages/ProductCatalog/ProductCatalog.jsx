@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import api from "../../services/api";
+import { Link } from "react-router-dom";
+import api from "../../../services/api";
 import "./ProductCatalog.css";
 
 const ProductCatalog = () => {
@@ -16,39 +17,17 @@ const ProductCatalog = () => {
     };
 
     fetchProducts();
-
-    const eventSource = new EventSource(
-      "http://localhost:3000/products/events"
-    );
-    eventSource.onmessage = (event) => {
-      const updatedProducts = JSON.parse(event.data);
-      setProducts(updatedProducts);
-    };
-
-    eventSource.addEventListener("product.deleted", (event) => {
-      const deletedProduct = JSON.parse(event.data);
-      setProducts((prevProducts) =>
-        prevProducts.filter((product) => product.id !== deletedProduct.id)
-      );
-    });
-
-    return () => {
-      eventSource.close();
-    };
   }, []);
 
   return (
     <div className="product-catalog">
       <h1>Catálogo de Produtos</h1>
+      <Link to="/create">Criar Novo Produto</Link>
       <div className="product-list">
         {products.map((product) => (
           <div key={product.id} className="product-card">
             <img
-              src={
-                product.imageUrl
-                  ? `http://localhost:3000/${product.imageUrl}`
-                  : "caminho/default.jpg"
-              }
+              src={`http://localhost:3000/${product.imageUrl}`}
               alt={product.name}
               className="card-image"
             />
@@ -57,6 +36,7 @@ const ProductCatalog = () => {
             <p className="card-price">
               R$ {parseFloat(product.price).toFixed(2)}
             </p>
+            <Link to={`/edit/${product.id}`}>Editar</Link>
           </div>
         ))}
       </div>
