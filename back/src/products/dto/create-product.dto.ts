@@ -1,16 +1,16 @@
 import { IsNumber, IsString, IsOptional } from 'class-validator';
 
 export class CreateProductDto {
-  @IsString() // Removido o @IsOptional() para torná-lo obrigatório
+  @IsString() 
   name: string;
 
-  @IsString() // Removido o @IsOptional() para torná-lo obrigatório
+  @IsString() 
   description: string;
 
-  @IsNumber() // Removido o @IsOptional() para torná-lo obrigatório
+  @IsNumber() 
   price: number;
 
-  @IsOptional() // Isso pode ser opcional
+  @IsOptional() 
   @IsString()
   imageUrl?: string;
 }

@@ -33,7 +33,7 @@ export class ProductsController {
     createProductDto.price = parseFloat(body.price);
     createProductDto.imageUrl = file ? `uploads/${file.filename}` : null;
 
-    return this.productsService.create(createProductDto, file); // Passando o arquivo também
+    return this.productsService.create(createProductDto, file); 
   }
 
   @Get()

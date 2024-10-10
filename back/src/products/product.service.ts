@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto'; // Importando o DTO de atualização
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductService {
@@ -12,7 +12,7 @@ export class ProductService {
     return this.prisma.product.create({
       data: {
         ...createProductDto,
-        imageUrl, // Incluindo a URL da imagem
+        imageUrl, 
       },
     });
   }
@@ -26,7 +26,6 @@ export class ProductService {
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
-    // Utilizando UpdateProductDto para atualizar os dados do produto
     return this.prisma.product.update({
       where: { id },
       data: updateProductDto,

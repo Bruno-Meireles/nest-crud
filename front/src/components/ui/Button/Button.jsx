@@ -11,8 +11,8 @@ const Button = ({ text, onClick, type = "button" }) => {
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,
-  onClick: PropTypes.func, // Adiciona onClick como prop opcional
-  type: PropTypes.string, // Adiciona type como prop opcional (default: 'button')
+  onClick: PropTypes.func, 
+  type: PropTypes.string,
 };
 
 export default Button;

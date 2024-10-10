@@ -50,13 +50,12 @@ const EditProduct = () => {
     }
   };
 
-  // Função para deletar o produto
   const handleDelete = async () => {
     if (window.confirm("Tem certeza que deseja deletar este produto?")) {
       try {
-        await api.delete(`/products/${id}`); // Envia requisição DELETE para a API
+        await api.delete(`/products/${id}`); 
         alert("Produto deletado com sucesso!");
-        navigate("/"); // Redireciona para o catálogo após exclusão
+        navigate("/"); 
       } catch (error) {
         console.error("Erro ao deletar produto:", error);
       }
@@ -65,7 +64,7 @@ const EditProduct = () => {
 
   useEffect(() => {
     if (isProductUpdated) {
-      setTimeout(() => navigate("/"), 2000); // Redireciona após 3 segundos
+      setTimeout(() => navigate("/"), 2000);
     }
   }, [isProductUpdated, navigate]);
 
@@ -106,9 +105,8 @@ const EditProduct = () => {
             onChange={handleChange}
           />
           <button type="submit">Salvar</button>
-          {/* Botão de Deletar */}
           <button
-            type="button" // Não queremos que este botão envie o formulário
+            type="button" // Não quero que este botão envie o formulário
             onClick={handleDelete}
             style={{
               marginLeft: "10px",

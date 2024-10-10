@@ -8,7 +8,7 @@ const CreateProduct = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState(null);
-  const [isProductCreated, setIsProductCreated] = useState(false); // Indica se o produto foi cadastrado com sucesso
+  const [isProductCreated, setIsProductCreated] = useState(false);
   const navigate = useNavigate();
 
   const handleImageChange = (event) => {
@@ -30,7 +30,7 @@ const CreateProduct = () => {
       const response = await api.post("/products", formData);
       console.log("Produto cadastrado:", response.data);
 
-      setIsProductCreated(true); // Define como verdadeiro para indicar sucesso no cadastro
+      setIsProductCreated(true);
     } catch (error) {
       console.error("Erro ao cadastrar produto:", error);
     }
@@ -42,9 +42,7 @@ const CreateProduct = () => {
       {isProductCreated ? (
         <div>
           <p>Produto cadastrado com sucesso!</p>
-          {/* Botão para redirecionar ao catálogo */}
           <Button text="Ir para o Catálogo" onClick={() => navigate("/")} />
-          {/* Botão para voltar ao formulário de cadastro */}
           <Button
             text="Cadastrar Novo Produto"
             onClick={() => setIsProductCreated(false)}
