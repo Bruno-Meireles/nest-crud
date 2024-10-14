@@ -6,7 +6,7 @@
 .product-card {
     max-width: 300px;
     min-width: 300px;
-    border: 1px solid var(--background-color-light);
+    border: 1px solid var(--hover-color-light);
     border-radius: 8px;
     padding: 16px;
     margin: 16px;
@@ -54,20 +54,4 @@ button {
 
 button:hover {
     background-color: var(--primary-hover);
-}
-
-@media (prefers-color-scheme: dark) {
-    .product-card {
-        background-color: var(--background-color-dark);
-    }
-
-    .card-title,
-    .card-description {
-        color: var(--text-color-dark);
-    }
-
-    button {
-        background-color: var(--button-bg-dark);
-        color: var(--text-color-dark);
-    }
 }

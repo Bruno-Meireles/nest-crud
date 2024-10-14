@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../services/api";
 import Button from "../../ui/Button/Button";
+import Input from "../../ui/Input/Input";
 
 const CreateProduct = () => {
   const [name, setName] = useState("");
@@ -53,7 +54,7 @@ const CreateProduct = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Nome:</label>
-            <input
+            <Input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -70,7 +71,7 @@ const CreateProduct = () => {
           </div>
           <div className="form-group">
             <label>Preço:</label>
-            <input
+            <Input
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
@@ -81,7 +82,7 @@ const CreateProduct = () => {
             <label>Imagem:</label>
             <input type="file" onChange={handleImageChange} />
           </div>
-          <button type="submit">Cadastrar Produto</button>
+          <Button type="submit" text="Cadastrar Produto" />
         </form>
       )}
     </div>

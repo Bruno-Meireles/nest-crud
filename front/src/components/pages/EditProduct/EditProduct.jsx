@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../../services/api";
 import Button from "../../ui/Button/Button";
+import Input from "../../ui/Input/Input";
 
 const EditProduct = () => {
   const { id } = useParams();
@@ -78,7 +79,7 @@ const EditProduct = () => {
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
-          <nput
+          <Input
             type="text"
             name="name"
             placeholder="Nome do Produto"
@@ -91,14 +92,14 @@ const EditProduct = () => {
             value={product.description}
             onChange={handleChange}
           />
-          <input
+          <Input
             type="number"
             name="price"
             placeholder="Preço"
             value={product.price}
             onChange={handleChange}
           />
-          <input
+          <Input
             type="text"
             name="imageUrl"
             placeholder="URL da Imagem"
