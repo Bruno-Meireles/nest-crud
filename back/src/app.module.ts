@@ -5,6 +5,7 @@ import { UserModule } from './user/user.module';
 import { ProductModule } from './products/product.module';
 import { PrismaService } from './prisma/prisma.service';
 
+
 @Module({
   imports: [UserModule, ProductModule],
   controllers: [AppController],

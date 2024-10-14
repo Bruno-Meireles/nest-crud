@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import api from "../../../services/api";
 import "./ProductCatalog.css";
+import Button from "../../ui/Button/Button";
 
-const ProductCatalog = () => {
+const ProductCatalog = ({ onLogout }) => {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -19,10 +22,16 @@ const ProductCatalog = () => {
     fetchProducts();
   }, []);
 
+  const handleLogout = () => {
+    onLogout();
+    navigate("/");
+  };
+
   return (
     <div className="product-catalog">
-      <h1>Catálogo de Produtos</h1>
-      <Link to="/create">Criar Novo Produto</Link>
+      <Button text="Logout" onClick={handleLogout} />
+      <Button text="Criar Novo Produto" onClick={() => navigate("../create")} />
+
       <div className="product-list">
         {products.map((product) => (
           <div key={product.id} className="product-card">
@@ -42,6 +51,10 @@ const ProductCatalog = () => {
       </div>
     </div>
   );
+};
+
+ProductCatalog.propTypes = {
+  onLogout: PropTypes.func.isRequired,
 };
 
 export default ProductCatalog;

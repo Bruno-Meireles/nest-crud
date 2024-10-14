@@ -39,6 +39,7 @@ const CreateProduct = () => {
   return (
     <div className="create-product">
       <h1>Cadastrar Novo Produto</h1>
+
       {isProductCreated ? (
         <div>
           <p>Produto cadastrado com sucesso!</p>

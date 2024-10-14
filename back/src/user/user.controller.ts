@@ -8,15 +8,29 @@ import {
   Patch,
   Post,
   Put,
+  UnauthorizedException, 
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePutUserDto } from './dto/update-put-user.dto';
 import { UpdatePatchUserDto } from './dto/update-patch-user.dto';
 import { UserService } from './user.service';
+import { LoginDto } from './dto/login.dto';
 
 @Controller('users')
-export class UserControler {
+export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Post('login')
+  async login(@Body() loginDto: LoginDto) {
+    const user = await this.userService.validateUser(loginDto);
+
+
+    if (!user) {
+      throw new UnauthorizedException('Email or password is incorrect');
+    }
+
+    return { message: 'Login successful', user };
+  }
 
   @Post()
   async createUser(@Body() data: CreateUserDto) {
@@ -40,6 +54,7 @@ export class UserControler {
   ) {
     return this.userService.update(id, data);
   }
+
   @Patch(':id')
   async updatePartial(
     @Body() data: UpdatePatchUserDto,

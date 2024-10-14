@@ -1,12 +1,38 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdatePutUserDto } from './dto/update-put-user.dto';
 import { UpdatePatchUserDto } from './dto/update-patch-user.dto';
+import { User } from '@prisma/client';
+import { LoginDto } from './dto/login.dto'; 
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
+
+  async findByEmail(email: string): Promise<User | null> {
+    return this.prisma.user.findUnique({
+      where: { email }, 
+    });
+  }
+
+  async validateUser(loginDto: LoginDto): Promise<User | null> {
+    const user = await this.findByEmail(loginDto.email);
+    if (!user) {
+      throw new UnauthorizedException('Email or password is incorrect');
+    }
+
+ 
+    if (user.password !== loginDto.password) {
+      throw new UnauthorizedException('Email or password is incorrect');
+    }
+
+    return user;
+  }
 
   async createUser({ email, name, password }: CreateUserDto) {
     return await this.prisma.user.create({
