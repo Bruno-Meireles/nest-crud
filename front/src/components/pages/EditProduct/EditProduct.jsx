@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../../services/api";
+import Button from "../../ui/Button/Button";
 
 const EditProduct = () => {
   const { id } = useParams();
@@ -53,9 +54,9 @@ const EditProduct = () => {
   const handleDelete = async () => {
     if (window.confirm("Tem certeza que deseja deletar este produto?")) {
       try {
-        await api.delete(`/products/${id}`); 
+        await api.delete(`/products/${id}`);
         alert("Produto deletado com sucesso!");
-        navigate("/"); 
+        navigate("/");
       } catch (error) {
         console.error("Erro ao deletar produto:", error);
       }
@@ -77,7 +78,7 @@ const EditProduct = () => {
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
-          <input
+          <nput
             type="text"
             name="name"
             placeholder="Nome do Produto"
@@ -104,18 +105,9 @@ const EditProduct = () => {
             value={product.imageUrl}
             onChange={handleChange}
           />
-          <button type="submit">Salvar</button>
-          <button
-            type="button" // Não quero que este botão envie o formulário
-            onClick={handleDelete}
-            style={{
-              marginLeft: "10px",
-              backgroundColor: "red",
-              color: "white",
-            }}
-          >
-            Deletar Produto
-          </button>
+          <Button type="submit" text="Salvar" />
+
+          <Button type="button" text="Deletar Produto" onClick={handleDelete} />
         </form>
       )}
     </div>

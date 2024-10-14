@@ -6,11 +6,11 @@
 .product-card {
     max-width: 300px;
     min-width: 300px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--background-color-light);
     border-radius: 8px;
     padding: 16px;
     margin: 16px;
-    background-color: #fff;
+    background-color: var(--background-color-light);
     transition: transform 0.2s;
 }
 
@@ -27,31 +27,47 @@
 
 .card-title {
     font-size: 1.5em;
-    color: #333;
+    color: var(--text-color-light);
 }
 
 .card-description {
     font-size: 1em;
-    color: #666;
+    color: var(--text-color-light);
 }
 
 .card-price {
     font-size: 1.2em;
-    color: #28a745;
+    color: var(--primary-color);
 }
 
 button {
     width: 100%;
     padding: 12px;
-    background-color: #28a745;
+    background-color: var(--button-bg-light);
     border: none;
     border-radius: 5px;
-    color: white;
+    color: var(--text-color-light);
     font-size: 1em;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #218838;
+    background-color: var(--primary-hover);
+}
+
+@media (prefers-color-scheme: dark) {
+    .product-card {
+        background-color: var(--background-color-dark);
+    }
+
+    .card-title,
+    .card-description {
+        color: var(--text-color-dark);
+    }
+
+    button {
+        background-color: var(--button-bg-dark);
+        color: var(--text-color-dark);
+    }
 }
